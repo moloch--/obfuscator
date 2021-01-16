@@ -1,0 +1,35 @@
+# https://github.com/Kitware/CMake/releases/download/v3.19.3/cmake-3.19.3-win64-x64.msi
+# 
+
+# git clone -b llvm-9.0.1 https://github.com/obfuscator-llvm/obfuscator.git
+# cd obfuscator
+# mkdir build
+# cd build
+# cmake -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles" ../
+# mingw32-make.exe -j7
+
+name: Obfuscator-LLVM
+on:
+  push:
+    branches: 
+      - llvm-9.0.1
+
+jobs:
+
+  windows-build:
+    name: Windows Build
+    runs-on: windows-latest
+
+    steps:
+      - uses: msys2/setup-msys2@v2
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+    
+      - name: Compile
+        run: |
+          dir
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles" ../
+          mingw32-make.exe -j7
